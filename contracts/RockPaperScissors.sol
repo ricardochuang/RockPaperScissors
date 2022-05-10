@@ -105,7 +105,7 @@ contract RockPaperScissors {
 
     // The rock defeats the scissors by breaking it, the scissors that defeats the paper by cutting it
     // and the paper defeats the stone by wrapping it, if the option is the same then it is a draw
-    function selectWinner() internal {
+    function selectWinner() internal{
         Options winnerChoice;
         Options loserChoice;
         address winner;
@@ -145,6 +145,9 @@ contract RockPaperScissors {
         // After the winner was announced, the game is reset
         reset();
     }
+
+    fallback() external payable {}
+    receive() external payable {}
 
     // Creates an announcement message for the players
     function getAnnouncement(Options option, string memory message)
