@@ -1,4 +1,3 @@
-//// SPDX-License-Identifier: MIT
 //pragma solidity ^0.8.0;
 //
 //contract RockPaperScissors {
@@ -121,7 +120,9 @@
 //            (player1Choice == Options.ROCK &&
 //            player2Choice == Options.SCISSORS) ||
 //            (player1Choice == Options.SCISSORS &&
-//            player2Choice == Options.PAPER)
+//            player2Choice == Options.PAPER) ||
+//              (player1Choice == Options.PAPER &&
+//               player2Choice == Options.Rock)
 //        ) {
 //            winnerChoice = player1Choice;
 //            loserChoice = player2Choice;
@@ -264,11 +265,11 @@ contract RockPaperScissors {
         }
     }
 
-    function loserTranse(address winner)
-    payable
-    public {
-        payable(winner).transfer(1000);
-    }
+//    function loserTranse(address winner)
+//    payable
+//    public {
+//        payable(winner).transfer(1000);
+//    }
 
 
     // Using external since it is cheaper than public and nobody needs to call it internally
@@ -315,7 +316,8 @@ contract RockPaperScissors {
             (player1Choice == Options.ROCK &&
             player2Choice == Options.SCISSORS) ||
             (player1Choice == Options.SCISSORS &&
-            player2Choice == Options.PAPER)
+            player2Choice == Options.PAPER) ||
+            (player1Choice == Options.PAPER && player2Choice == Options.ROCK)
         ) {
             winnerChoice = player1Choice;
             loserChoice = player2Choice;
@@ -335,7 +337,7 @@ contract RockPaperScissors {
         string memory winnerAnnouncement =
         getAnnouncement(winnerChoice, "The winner chose: ");
         emit Winner(loserAnnouncement, winnerAnnouncement, winner);
-        loserTranse(winner);
+//        loserTranse(winner);
         // After the winner was announced, the game is reset
         reset();
     }
