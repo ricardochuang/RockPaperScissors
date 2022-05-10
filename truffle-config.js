@@ -26,8 +26,8 @@
 //
 //};
 
-const HDWalletProvider = require('@truffle/hdwallet-provider');
-const privateKey= require('./secrets.json').privateKey;
+// const HDWalletProvider = require('@truffle/hdwallet-provider');
+// const privateKey= require('./secrets.json').privateKey;
 
 module.exports = {
   contracts_build_directory: './client/src/contracts',
