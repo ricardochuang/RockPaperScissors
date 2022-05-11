@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-import "../openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "../openzeppelin/contracts/token/ERC20/ERC20.sol";
 pragma solidity ^0.8.0;
 
-contract RockPaperScissors is ERC721 {
+contract RockPaperScissors is ERC20 {
 
 
-    constructor() public ERC721("Game Coin", "GCOIN") {
+    constructor() public ERC20("Game Coin", "GCOIN") {
         //Minting 1000 fungible tokens in the smart contract
         _mint(address(this), 1000);
     }
@@ -95,9 +95,9 @@ contract RockPaperScissors is ERC721 {
         // payable(WINNER).transfer(msg.value);
         // this.transfer(WINNER, msg.value);
    
-    //    transferFrom(LOSER, WINNER, msg.value);
+       transferFrom(LOSER, WINNER, msg.value);
         // transfer(msg.sender, msg.value);
-        transferFrom(msg.sender, address(this), msg.value);
+        // transferFrom(msg.sender, address(this), msg.value);
 
    }
 
