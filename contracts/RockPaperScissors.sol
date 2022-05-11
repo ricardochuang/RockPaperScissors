@@ -112,7 +112,7 @@ contract RockPaperScissors is ERC20 {
     //    transferFrom(LOSER, WINNER, 10000000);
 
         // transfer(msg.sender, msg.value);
-        send_ETH(payable (WINNER));
+        //send_ETH(payable (WINNER));
         // send_call(payable (WINNER));
         // transferFrom(msg.sender, address(this), msg.value);
 
