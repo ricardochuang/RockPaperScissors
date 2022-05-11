@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import GameScreen from './components/GameScreen';
 import "./App.css";
 import 'regenerator-runtime/runtime';
+import styled from 'styled-components';
 
 const enumOptions = { ROCK: 1, PAPER: 2, SCISSORS: 3 };
 
@@ -253,6 +254,7 @@ class App extends Component {
       
     }
 
+
     const resetButton = () => {
       const { stepName } = this.state;
       return ( 
@@ -265,12 +267,15 @@ class App extends Component {
 
     return (
       <div className="App">
-        {header()}
-        {playersInformation()}
-        <h3>{this.state.pageInstructions}</h3>
-        {resetButton()}
-        {joinStage()}
-        {showGameScreen()}
+        <div className="all">
+          {header()}
+          {playersInformation()}
+          <h3>{this.state.pageInstructions}</h3>
+          {resetButton()}
+          {joinStage()}
+          {showGameScreen()}
+        </div>
+
       </div>
     );
   }
