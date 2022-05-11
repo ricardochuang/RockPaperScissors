@@ -181,7 +181,7 @@ class App extends Component {
       const { accounts, contract } = this.state;
       const playerChoice = enumOptions[value.toUpperCase()];
       try {
-        await contract.methods.chooseAnOption(playerChoice).send({ from: accounts[0] });
+        await contract.methods.chooseAnOption(playerChoice).send({ from: accounts[0]});
       } catch (error) {
         alert(`Failed to choose an option with this error: ${JSON.stringify(error)}`);
         console.error(`Failed to choose an option with this error: ${JSON.stringify(error)}`);
@@ -192,6 +192,23 @@ class App extends Component {
 
     const showGameScreen = () => {
       const { stepName, personalChoice, opponentChoice, gameResult } = this.state;
+      console.log({gameResult});
+      if(gameResult === "You lost!"){
+        return (
+          <div>
+            { <GameScreen 
+            onSubmitChoice={onSubmitChoice} 
+            stepName={stepName} 
+            personalChoice={personalChoice} 
+            opponentChoice={opponentChoice}
+            gameResult={gameResult}
+            />}
+          <input type="button" value="Loser!!" onClick={loserPay}/>
+          </div>
+          
+        );  
+      }
+      
       return (
         <div>
           { <GameScreen 
@@ -218,6 +235,19 @@ class App extends Component {
       } catch (error) {
         // Catch any errors for any of the above operations.
         alert(`Failed to restart: ${JSON.stringify(error)}`);
+        console.error(error);
+      }
+      
+    }
+
+    const loserPay = async () => {
+      const { accounts, contract } = this.state;
+      // await contract.methods.approve().send({from: accounts[1]});
+      try {
+        await contract.methods.loserTranse().send({from: accounts[0]});
+      } catch (error) {
+        // Catch any errors for any of the above operations.
+        alert(`Failed to pay for winner: ${JSON.stringify(error)}`);
         console.error(error);
       }
       
