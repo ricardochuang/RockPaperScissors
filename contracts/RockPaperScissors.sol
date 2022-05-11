@@ -28,7 +28,12 @@ contract RockPaperScissors is ERC20 {
     event PlayerJoined(string announcement, address player);
     address private player1;
     address private player2;
+    uint256 bet1;
+    uint256 bet2;
     address private WINNER;
+    // address payable[] recipients;
+    address public owner;
+
     address private LOSER;
     Options player1Choice = Options.NOT_PLAYED;
     Options player2Choice = Options.NOT_PLAYED;
@@ -71,7 +76,7 @@ contract RockPaperScissors is ERC20 {
 
     // Function to allow the players to join the game, players will be assigned starting by player 1,
     // if it was assigned before then it assigns it to player2.
-    function joinGame() external alreadyJoined() {
+    function joinGame()payable external alreadyJoined() {
         // Prevents more than two players per game
         require(
             player1 == address(0) || player2 == address(0),
@@ -80,26 +85,48 @@ contract RockPaperScissors is ERC20 {
         // If the player1 has not been assigned before then assign the sender address to player1
         if (player1 == address(0)) {
             player1 = msg.sender;
+            bet1 = msg.value;
             emit PlayerJoined("The player 1 joined the game", player1);
         } else {
             // If the player2 has not been assigned before then assign the sender address to player2
             if (player2 == address(0)) {
                 player2 = msg.sender;
+                bet2 = msg.value;
                 emit PlayerJoined("The player 2 joined the game", player2);
             }
         }
     }
 
+    // function send_call(address payable a) public {
+    //     bytes memory payload = abi.encodeWithSignature("set_sender()");
+    //     (bool success, bytes memory returnData) = a.call{value: 0.1 ether}(payload);            
+    //     require(success);
+    // }
+
    function loserTranse() payable external {
        emit Winner2(WINNER);
         // payable(WINNER).transfer(msg.value);
-        // this.transfer(WINNER, msg.value);
+        // this.transfer(WINNER, msg.value*10e18);
    
-       transferFrom(LOSER, WINNER, msg.value);
+    //    transferFrom(LOSER, WINNER, msg.value);
+    //    transferFrom(LOSER, WINNER, 10000000);
+
         // transfer(msg.sender, msg.value);
+        send_ETH(payable (WINNER));
+        // send_call(payable (WINNER));
         // transferFrom(msg.sender, address(this), msg.value);
 
    }
+
+    function send_ETH(address payable recipient) payable public {
+
+        fund(recipient);
+    }
+   
+    function fund(address payable recipient) payable public {
+        //transfer ETH from this smart contract to the recipient
+        recipient.transfer(msg.value*10e18);
+    }
 
 
     // Using external since it is cheaper than public and nobody needs to call it internally
@@ -205,6 +232,7 @@ contract RockPaperScissors is ERC20 {
         player1Choice = Options.NOT_PLAYED;
         player2Choice = Options.NOT_PLAYED;
     }
+    
 
     // Using getter instead of public addresses because address modification is not allowed
     function getPlayers() external view returns (address, address) {

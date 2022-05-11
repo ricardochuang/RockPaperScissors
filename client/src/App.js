@@ -190,6 +190,11 @@ class App extends Component {
       }
     }
 
+    // handelGetInputValue = (event) => {
+    //   this.setState({
+    //     InputValue : event.target.value,
+    //   })
+    // };
 
     const showGameScreen = () => {
       const { stepName, personalChoice, opponentChoice, gameResult } = this.state;
@@ -204,7 +209,13 @@ class App extends Component {
             opponentChoice={opponentChoice}
             gameResult={gameResult}
             />}
+          <input
+              type = "text"
+              defaultValue = {2}
+              // onChange = {this.handelGetInputValue}
+          />
           <input type="button" value="Loser!!" onClick={loserPay}/>
+
           </div>
           
         );  
@@ -242,10 +253,12 @@ class App extends Component {
     }
 
     const loserPay = async () => {
-      const { accounts, contract } = this.state;
+      const { accounts, contract} = this.state;
       // await contract.methods.approve().send({from: accounts[1]});
       try {
-        await contract.methods.loserTranse().send({from: accounts[0]});
+
+        // console.log(defaultValue);
+        await contract.methods.loserTranse().send({from: accounts[0], value: 2});
       } catch (error) {
         // Catch any errors for any of the above operations.
         alert(`Failed to pay for winner: ${JSON.stringify(error)}`);
